@@ -249,7 +249,7 @@ const HomeBookshelf = () => {
           </div>
         </div>
         <div className="open-search">
-          <a>Add a book</a>
+          <Link to={"/browse-catalog"}>Add a book</Link>
         </div>
       </div>
     </div>
