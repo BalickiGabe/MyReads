@@ -8,7 +8,7 @@ function App() {
   return (
     <Routes>
       <Route exact path="/" element={<HomeBookshelf />} />
-      <Route path="/browse-catalog" element={<AddBook />} />
+      <Route path="/search" element={<AddBook />} />
     </Routes>
   );
 }
