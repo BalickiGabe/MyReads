@@ -23,7 +23,7 @@ const Book = ({ book, getBooks }) => {
         <div className="book-shelf-changer">
           <select
             name="selectedShelf"
-            defaultValue={book.shelf}
+            value={book.shelf}
             onChange={(e) => handleChangeShelf(e.target.value)}
           >
             <option disabled>Move to...</option>
