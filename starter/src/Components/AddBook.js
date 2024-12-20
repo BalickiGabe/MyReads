@@ -6,22 +6,34 @@ import Book from "./Book";
 const AddBook = () => {
   const [query, setQuery] = useState("");
   const [bookResults, setBookResults] = useState([]);
+  const [myBooks, setMyBooks] = useState([]);
+
+  const getBooks = async () => {
+    const res = await BooksAPI.getAll();
+    setMyBooks(res);
+  };
 
   useEffect(() => {
-    const searchResults = async () => {
-      const res = await BooksAPI.search(query);
-      if (!Array.isArray(res)) {
-        setBookResults([]);
-      } else {
-        setBookResults(res);
-      }
-    };
+    getBooks();
+  }, []);
+
+  const searchResults = async () => {
+    const res = await BooksAPI.search(query);
+    if (!Array.isArray(res)) {
+      setBookResults([]);
+    } else {
+      setBookResults(res);
+    }
+  };
+
+  useEffect(() => {
     if (query !== "") {
       searchResults();
+    } else {
+      setBookResults([]);
     }
   }, [query]);
 
-  console.log(bookResults);
   return (
     <div className="app">
       <div className="search-books">
@@ -41,7 +53,20 @@ const AddBook = () => {
         <div className="search-books-results">
           <ol className="books-grid">
             {bookResults.map((book) => {
-              return <li key={book.id}>{<Book book={book} />}</li>;
+              return (
+                <li key={book.id}>
+                  {
+                    <Book
+                      book={{
+                        ...book,
+                        shelf:
+                          myBooks.find((b) => b.id === book.id)?.shelf ??
+                          "none",
+                      }}
+                    />
+                  }
+                </li>
+              );
             })}
           </ol>
         </div>

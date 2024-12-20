@@ -3,13 +3,13 @@ import * as BooksAPI from "../BooksAPI.js";
 const Book = ({ book, getBooks }) => {
   const handleChangeShelf = async (newShelf) => {
     await BooksAPI.update(book, newShelf);
-    getBooks();
+    getBooks?.();
   };
 
   return (
     <div className="book">
       <div className="book-top">
-        {book.imageLinks.thumbnail ? (
+        {book.imageLinks ? (
           <div
             className="book-cover"
             style={{
@@ -26,9 +26,7 @@ const Book = ({ book, getBooks }) => {
             defaultValue={book.shelf}
             onChange={(e) => handleChangeShelf(e.target.value)}
           >
-            <option value="none" disabled>
-              Move to...
-            </option>
+            <option disabled>Move to...</option>
             <option value="currentlyReading">Currently Reading</option>
             <option value="wantToRead">Want to Read</option>
             <option value="read">Read</option>
@@ -38,7 +36,7 @@ const Book = ({ book, getBooks }) => {
       </div>
       <div className="book-title">{book.title}</div>
       <div className="book-authors">
-        {book.authors.map((author) => `${author} `)}
+        {book.authors?.map((author) => `${author} `)}
       </div>
     </div>
   );
